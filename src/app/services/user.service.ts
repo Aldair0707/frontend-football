@@ -31,6 +31,11 @@ export class UserService {
       );
   }
 
+  // Método para registrar un usuario
+  registerUser(userData: any): Observable<any> {
+    return this.http.post(this.apiURL + 'signup', userData, this.httpOptions);  // Cambié la ruta a /signup
+  }
+
   private handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {

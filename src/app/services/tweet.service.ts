@@ -24,39 +24,63 @@ export class TweetService {
   httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin':'*',
       'Authorization':'Bearer '  + this.token
     })
   }
 
   errorMessage = "";
 
+  
+  getTweets(page: number, size: number): Observable<any> {
+  const token = this.storageService.getSession("token"); // ¡toma el token actualizado!
+  
+  const httpOptions = {
+     headers : new HttpHeaders({
+    'Authorization': 'Bearer ' + token
+  })
+  };
 
-  getTweets(): Observable<Tweet> {
-    console.log("tweets: " + this.apiURL+ 'api/publicaciones/all');
-    return this.http.get<Tweet>(this.apiURL + 'api/publicaciones/all', this.httpOptions)
+  return this.http.get<any>(`${this.apiURL}api/publicaciones/all?page=${page}&size=${size}`, httpOptions)
     .pipe(
       retry(1),
       catchError(this.handleError)
-    )
-  }
-
-  postTweet(myTweet: String) {
-
-
-    const body = {
-             tweet: myTweet,
-          };
-
-    console.log(body)
-
-
-    return this.http.post(this.apiURL + 'api/publicaciones/crear', body, this.httpOptions)
-    .pipe(
-        catchError(this.handleError)
     );
+}
 
+
+  postTweet(myTweet: string): Observable<Object> {
+  // Obtén el token del almacenamiento
+  const token = this.storageService.getSession("token");
+
+  // Verifica si el token está disponible
+  if (!token) {
+    console.error("Token JWT no encontrado");
+    return throwError(() => new Error("Token JWT no encontrado"));  // Retorna un error si no hay token
   }
+
+  // Configura las opciones HTTP con el token en el encabezado
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + token
+    }),
+    withCredentials: true // Asegúrate de habilitar esto si necesitas cookies de autenticación
+  };
+
+  // Crea el cuerpo de la solicitud con el contenido del tweet
+  const body = { contenido: myTweet }; // Usa "contenido" como clave
+  console.log("Cuerpo enviado al backend:", body);
+
+  // Realiza la solicitud POST al backend y retorna el observable
+  return this.http.post(this.apiURL + 'api/publicaciones/crear', body, httpOptions)
+    .pipe(
+      catchError(this.handleError) // Maneja errores si los hay
+    );
+}
+
+
+
+
 
 
    // Error handling

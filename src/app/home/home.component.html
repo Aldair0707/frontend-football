@@ -1,25 +1,28 @@
 
 <p>Welcome {{ username }}</p>
 
+<div class="container">
+  <header class="header">
+    <h1>fake tweeter</h1>
+    <button (click)="cerrarSesion()" class="logout-button">Cerrar sesión</button>
+  </header>
 
-<div class ="container color-ligth">
+  <section class="tweet-box">
+    <textarea [(ngModel)]="tweetText" placeholder="¿Qué estás pensando?" class="tweet-textarea"></textarea>
+    <button (click)="addTweet()" class="tweet-button">Tweet</button>
+  </section>
 
-    <div class = "col">
-
-      <form>
-        <input type="text" class="txt" name="item" placeholder="your tweet here..." [(ngModel)]= "tweetText">
-
-        <input type="submit" class ="btn" value="tweet" (click)="addTweet()">
-      </form>
+  <section class="tweet-list">
+    <div *ngFor="let tweet of tweets" class="tweet-card">
+      <p class="username"><strong>{{ tweet.username }}</strong></p>
+      <p class="content">{{ tweet.contenido }}</p>
+      <p class="date">{{ tweet.fechaCreacion | date: 'short' }}</p>
     </div>
 
-    <div class = "col">
-       <p class="life-container" *ngFor="let tweet of tweets; let i = index">
+    <div #scrollAnchor></div>
+    <p *ngIf="loading" class="loading">Cargando más tweets...</p>
+  </section>
 
-          {{tweet.id}} - {{tweet.tweet}}
-        </p>
-    </div>
+  <footer class="footer">by aldair</footer>
+</div>
 
-
-
-  </div>

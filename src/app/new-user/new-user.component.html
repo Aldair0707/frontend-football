@@ -1,54 +1,31 @@
-<table border=1>
-<tr>
-  <td> Sign up for CRM-uv  </td> <td>
-  <a routerLink="/">
-     cancel
-  </a>
-  </td>
-</tr>
-<tr>
-  <td colspan=2> Email </td>
-</tr>
+<div class="new-user-container">
+  <h2>Crear nuevo usuario</h2>
 
-<tr>
- <td colspan=2> <input type="email" [(ngModel)]="myPayloadUser.email" >  </td>
-</tr>
+  <form (ngSubmit)="onSubmit()" [formGroup]="newUserForm" novalidate>
+    <div class="form-group">
+      <label for="username">Nombre de usuario</label>
+      <input type="text" id="username" formControlName="username" required />
+      <div *ngIf="newUserForm.get('username')?.invalid && newUserForm.get('username')?.touched" class="error">
+        Nombre de usuario es obligatorio y debe tener máximo 20 caracteres.
+      </div>
+    </div>
 
-<tr>
-<td> First Name </td> <td> Last Name  </td>
-</tr>
+    <div class="form-group">
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" formControlName="email" required />
+      <div *ngIf="newUserForm.get('email')?.invalid && newUserForm.get('email')?.touched" class="error">
+        Debe ser un correo electrónico válido.
+      </div>
+    </div>
 
-<tr>
-<td>  <input type="text" [(ngModel)]="myPayloadUser.firstName" name="firstName" >  </td>
- <td> <input type="text" [(ngModel)]="myPayloadUser.lastName">  </td>
-</tr>
+    <div class="form-group">
+      <label for="password">Contraseña</label>
+      <input type="password" id="password" formControlName="password" required />
+      <div *ngIf="newUserForm.get('password')?.invalid && newUserForm.get('password')?.touched" class="error">
+        La contraseña es obligatoria y debe tener al menos 6 caracteres.
+      </div>
+    </div>
 
-<tr>
-<td colspan=2> Password </td>
-</tr>
-<tr colspan=2>
-<td>  <input type="password" [(ngModel)]="myPayloadUser.password">  </td>
-</tr>
-
-
-<tr>
- <td colspan=2 >
-
-   Please provide a password of at least 8 chars
-
-</td>
-</tr>
-<tr>
-<td colspan=2>
-   <input type="checkbox"> I have read and agree to CRM-univ ...
- </td>
-</tr>
-<tr>
- <td></td> <td>
-  <button (click)="createUser()">
-       create
-  </button>
-
- </td>
-</tr>
-</table>
+    <button type="submit" [disabled]="newUserForm.invalid">Crear usuario</button>
+  </form>
+</div>

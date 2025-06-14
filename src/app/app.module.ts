@@ -13,7 +13,11 @@ import { HomeComponent } from './home/home.component';
 import {FormsModule } from "@angular/forms";
 import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NewUserComponent } from './new-user/new-user.component';
 
+//import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,8 @@ import { RouterModule } from '@angular/router';
     ResetPasswordComponent,
     LandingPageComponent,
     TweetsComponent,
-    HomeComponent
+    HomeComponent,
+    NewUserComponent
   ],
   imports: [
     BrowserModule,
@@ -30,8 +35,17 @@ import { RouterModule } from '@angular/router';
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
+    ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [
+    /*{
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }*/
+    
+  ],
   bootstrap: [AppComponent]
+  
 })
 export class AppModule { }

@@ -40,6 +40,9 @@ export class StorageService {
     localStorage.removeItem(key);
   }
 
+  clearSession(): void {
+  localStorage.clear();
+}
 
 
 }
