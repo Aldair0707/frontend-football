@@ -41,7 +41,7 @@ export class StorageService {
   }
 
   clearSession(): void {
-  localStorage.clear();
+  sessionStorage.clear();
 }
 
 

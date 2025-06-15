@@ -1,39 +1,249 @@
-.container {
-  max-width: 600px;
-  margin: auto;
-  padding: 1rem;
+/* Estilos generales */
+body {
+  font-family: 'Arial', sans-serif;
+  background: #121212; /* Fondo oscuro */
+  color: #e0e0e0; /* Color de texto claro */
+  margin: 0;
+  padding: 0;
 }
 
-.header, .footer {
+/* Contenedor principal */
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Estilo del encabezado */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 20px;
 }
 
+.header h1 {
+  font-size: 2rem;
+  color: #f5a623; /* Naranja brillante para el título */
+}
+
+.logout-button {
+  background-color: #f5a623;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.logout-button:hover {
+  background-color: #e6891f;
+}
+
+/* Estilo para el cuadro de tweet */
 .tweet-box {
-  margin-top: 1rem;
+  margin-bottom: 30px;
 }
 
 .tweet-textarea {
-  width: 100%;
-  min-height: 80px;
-  padding: 10px;
+  width: 97%;
+  padding: 12px;
   margin-bottom: 10px;
-  resize: vertical;
+  border: 2px solid #444;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.tweet-textarea:focus {
+  border-color: #f5a623;
+  outline: none;
 }
 
 .tweet-button {
-  float: right;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  background-color: #f5a623;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.tweet-button:hover {
+  background-color: #e6891f;
+}
+
+/* Estilo de las tarjetas de tweet */
+.tweet-list {
+  margin-top: 20px;
 }
 
 .tweet-card {
-  background-color: #f5f5f5;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 10px 0;
+  background-color: #222; /* Fondo oscuro para los tweets */
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-.loading {
+.tweet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.date {
+  font-size: 0.9rem;
+  color: #888; /* Color de la fecha */
+}
+
+/* Estilo de las reacciones */
+.reacciones {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.reaction-btn {
+  background-color: #333;
+  border: 2px solid #444;
+  color: #fff;
+  padding: 10px 20px;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.reaction-btn:hover {
+  background-color: #f5a623;
+  border-color: #f5a623;
+}
+
+/* Estilo de las reacciones */
+.reactions-list {
+  margin-top: 15px;
+  font-size: 1rem;
+}
+
+.reactions-list p {
+  margin: 5px 0;
+}
+
+/* Estilo de los comentarios */
+.comentario-form {
+  margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.comentario {
+  background-color: #333; /* Fondo más oscuro para los comentarios */
+  padding: 1px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  font-family: 'Arial', sans-serif;
+}
+
+.comentario-form textarea {
+  width: 97%;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 2px solid #444;
+  border-radius: 8px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  transition: 0.3s;
+}
+
+.comentario-form button {
+  padding: 12px;
+  font-size: 1rem;
+  background-color: #f5a623;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.comentario-form button:hover {
+  background-color: #e6891f;
+}
+
+.comentarios-separator {
+  margin-top: 10px;
+  border-top: 2px solid #444;
+  margin-bottom: 20px;
+}
+
+.comentario-texto {
+  font-size: 1rem;
+  color: #ddd; /* Texto claro */
+  line-height: 1.5;
+}
+
+/* Mejora de la fecha en los comentarios */
+.comentario .fecha {
+  font-size: 0.9rem;
+  color: #888;
+  margin-left: 10px; /* Separación entre autor y fecha */
+}
+
+/* Header del comentario */
+.comentario-header {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #f5a623; /* Color de autor */
+  display: flex;
+  justify-content: space-between;
+}
+
+/* Footer */
+.footer {
   text-align: center;
-  margin: 1rem 0;
+  margin-top: 50px;
+  color: #888;
+  font-size: 1rem;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  width: 40px; /* Tamaño del logo */
+  height: auto;
+  margin-right: 10px;
+}
+
+/* Responsividad */
+@media (max-width: 768px) {
+  .tweet-card {
+    padding: 15px;
+  }
+
+  .tweet-textarea,
+  .comentario-form textarea {
+    font-size: 0.9rem;
+  }
+
+  .tweet-button,
+  .comentario-form button {
+    font-size: 1rem;
+  }
 }

@@ -1,0 +1,21 @@
+<div class="container">
+  <header class="header">
+    <h1>Reacciones al Tweet</h1>
+  </header>
+
+  <section class="reaction-list">
+    <div *ngFor="let reaction of reactions" class="reaction-item">
+      <p><strong>{{ reaction.usuario }}</strong> reaccionó con {{ reaction.tipo }}</p>
+    </div>
+  </section>
+
+  <section class="reaction-form">
+    <button (click)="addReaction('LIKE')" class="reaction-button">Like</button>
+    <button (click)="addReaction('LOVE')" class="reaction-button">Love</button>
+    <button (click)="addReaction('SAD')" class="reaction-button">Sad</button>
+    <button (click)="addReaction('ANGRY')" class="reaction-button">Angry</button>
+    <button (click)="addReaction('GOAT')" class="reaction-button">GOAT</button>
+  </section>
+
+  <footer class="footer">by aldair</footer>
+</div>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { Tweet } from '../models/tweets/Tweet'
+import { Tweet } from '../models/tweets/Tweet';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { StorageService } from "../services/storage.service";
+import { Comentario } from '../models/comentarios/Comentario';
 
 @Injectable({
   providedIn: 'root'
@@ -11,91 +12,117 @@ import { StorageService } from "../services/storage.service";
 export class TweetService {
 
   apiURL = 'http://localhost:8080/';
-  token='';
+
   constructor(
     private http: HttpClient,
-    private storageService : StorageService)
-  {
-       this.token = this.storageService.getSession("token");
-       console.log(this.token);
+    private storageService: StorageService
+  ) {}
 
+  // Función para obtener el token
+  private getToken(): string | null {
+    const token = this.storageService.getSession("token");
+    if (!token) {
+      console.error("Token JWT no encontrado");
+      return null; // Si no hay token, retornamos null
+    }
+    return token;
   }
 
-  httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization':'Bearer '  + this.token
-    })
+  // Obtener los comentarios para un tweet
+  getCommentsByTweetId(tweetId: number): Observable<Comentario[]> {
+    const token = this.getToken(); // Verificar que el token está presente
+    if (!token) {
+      return throwError(() => new Error("Token no encontrado")); // Si no hay token, retornamos un error
+    }
+
+    // Configuramos los headers con el token
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token
+      })
+    };
+
+    return this.http.get<Comentario[]>(`${this.apiURL}api/comentarios/por-publicacion/${tweetId}`, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-  errorMessage = "";
+  // Crear un comentario
+  addComment(commentData: any): Observable<Comentario> {
+    const token = this.getToken(); // Verificar que el token está presente
+    if (!token) {
+      return throwError(() => new Error("Token no encontrado")); // Si no hay token, retornamos un error
+    }
 
-  
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token
+      })
+    };
+
+    return this.http.post<Comentario>(`${this.apiURL}api/comentarios/crear`, commentData, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  // Obtener los tweets
   getTweets(page: number, size: number): Observable<any> {
-  const token = this.storageService.getSession("token"); // ¡toma el token actualizado!
-  
-  const httpOptions = {
-     headers : new HttpHeaders({
-    'Authorization': 'Bearer ' + token
-  })
-  };
+    const token = this.getToken();
+    if (!token) {
+      return throwError(() => new Error("Token no encontrado"));
+    }
 
-  return this.http.get<any>(`${this.apiURL}api/publicaciones/all?page=${page}&size=${size}`, httpOptions)
-    .pipe(
-      retry(1),
-      catchError(this.handleError)
-    );
-}
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token
+      })
+    };
 
-
-  postTweet(myTweet: string): Observable<Object> {
-  // Obtén el token del almacenamiento
-  const token = this.storageService.getSession("token");
-
-  // Verifica si el token está disponible
-  if (!token) {
-    console.error("Token JWT no encontrado");
-    return throwError(() => new Error("Token JWT no encontrado"));  // Retorna un error si no hay token
+    return this.http.get<any>(`${this.apiURL}api/publicaciones/all?page=${page}&size=${size}`, httpOptions)
+      .pipe(
+        retry(1),
+        catchError(this.handleError)
+      );
   }
 
-  // Configura las opciones HTTP con el token en el encabezado
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + token
-    }),
-    withCredentials: true // Asegúrate de habilitar esto si necesitas cookies de autenticación
-  };
+  // Crear un tweet
+  postTweet(myTweet: string): Observable<Object> {
+    const token = this.getToken();
+    if (!token) {
+      return throwError(() => new Error("Token JWT no encontrado"));
+    }
 
-  // Crea el cuerpo de la solicitud con el contenido del tweet
-  const body = { contenido: myTweet }; // Usa "contenido" como clave
-  console.log("Cuerpo enviado al backend:", body);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      })
+    };
 
-  // Realiza la solicitud POST al backend y retorna el observable
-  return this.http.post(this.apiURL + 'api/publicaciones/crear', body, httpOptions)
-    .pipe(
-      catchError(this.handleError) // Maneja errores si los hay
-    );
-}
+    const body = { contenido: myTweet };
+
+    return this.http.post(this.apiURL + 'api/publicaciones/crear', body, httpOptions)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
+  
 
 
+  
 
-
-
-
-   // Error handling
-  handleError(error : any) {
+  // Manejo de errores
+  private handleError(error: any) {
     let errorMessage = '';
-    if(error.error instanceof ErrorEvent) {
-      // Get client-side error
+    if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;
     } else {
-      // Get server-side error
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
-    console.log(errorMessage);
-    window.alert(errorMessage);
+    console.error(errorMessage);
     return throwError(errorMessage);
- }
-
+  }
 }

@@ -16,6 +16,8 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NewUserComponent } from './new-user/new-user.component';
+import { ComentariosComponent } from './comentarios/comentarios.component';
+import { ReaccionesComponent } from './reacciones/reacciones.component';
 
 //import { AuthInterceptor } from './interceptors/auth.interceptor';
 
@@ -27,7 +29,9 @@ import { NewUserComponent } from './new-user/new-user.component';
     LandingPageComponent,
     TweetsComponent,
     HomeComponent,
-    NewUserComponent
+    NewUserComponent,
+    ComentariosComponent,
+    ReaccionesComponent
   ],
   imports: [
     BrowserModule,

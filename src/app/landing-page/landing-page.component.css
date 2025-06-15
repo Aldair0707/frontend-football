@@ -1,0 +1,68 @@
+/* Fondo oscuro */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: #1b1b1b;
+  color: #fff;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+/* Contenedor del Login */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  background: linear-gradient(to bottom, #232323, #121212);
+}
+
+/* Caja donde está el logo y el botón de login */
+.login-box {
+  background-color: #333;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+  width: 350px;
+  text-align: center;
+  margin: auto;
+}
+
+.login-box h1 {
+  font-size: 2.5rem;
+  color: #f5a623;
+  font-weight: bold;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+/* Botón de Login */
+.login-button {
+  display: inline-block;
+  padding: 12px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #f5a623;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.login-button:hover {
+  background-color: #e6891f;
+}
+
+/* Footer */
+footer {
+  position: absolute;
+  bottom: 20px;
+  font-size: 1rem;
+  color: #aaa;
+}
+
