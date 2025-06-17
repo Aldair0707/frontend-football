@@ -33,16 +33,16 @@ jobs:
         run: ls -la dist/frontend-football/browser
 
       - name: 🐳 Build Docker image with NGINX
-        run: docker build -t ${{ secrets.DOCKER_USER }}/frontend-football:${{ github.sha }} .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/soccerhub-angular:${{ github.sha }} .
 
       - name: 🧱 List Docker images
         run: docker images
 
       - name: 🔐 Docker login
         env:
-          DOCKER_USER: ${{ secrets.DOCKER_USER }}
+          DOCKER_USER: ${{ secrets.DOCKER_USERNAME }}
           DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        run: docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
 
       - name: 🚀 Push Docker image
-        run: docker push ${{ secrets.DOCKER_USER }}/frontend-football:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/soccerhub-angular:${{ github.sha }}
