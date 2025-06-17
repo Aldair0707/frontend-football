@@ -14,12 +14,12 @@ export class NewUserComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,  // Inyecta el servicio
+    private userService: UserService,  
     private router: Router
   ) {}
 
   ngOnInit(): void {
-    // Inicializa el formulario con validaciones
+     
     this.newUserForm = this.fb.group({
       username: ['', [Validators.required, Validators.maxLength(20)]],
       email: ['', [Validators.required, Validators.email]],
@@ -27,7 +27,7 @@ export class NewUserComponent implements OnInit {
     });
   }
 
-  // Función que se ejecuta al enviar el formulario
+ 
   onSubmit(): void {
     if (this.newUserForm.invalid) {
       return;
@@ -37,8 +37,7 @@ export class NewUserComponent implements OnInit {
 
     this.userService.registerUser(userData).pipe(first()).subscribe({
       next: (data) => {
-        // Redirige al login o a otra página según tu lógica
-        this.router.navigate(['/login']);
+         this.router.navigate(['/login']);
       },
       error: (error) => {
         console.error('Error al registrar usuario', error);

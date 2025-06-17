@@ -11,32 +11,52 @@ import { Comentario } from '../models/comentarios/Comentario';
 })
 export class TweetService {
 
-  apiURL = 'http://localhost:8080/';
+  apiURL = 'https://soccerhub-spring.onrender.com/';
+  token = '';
 
   constructor(
     private http: HttpClient,
     private storageService: StorageService
-  ) {}
+  ) {
+    this.token = this.storageService.getSession('token');
+    console.log(this.token);
+  }
 
-  // Función para obtener el token
-  private getToken(): string | null {
+  httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      Authorization: 'Bearer ' + this.token,
+    }),
+  };
+
+  errorMessage = '';
+  getHttpOptions() {
+    const token = this.storageService.getSession('token'); // lee porque si no se me traba por alguna razon
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + token,
+      }),
+    };
+  }
+
+   private getToken(): string | null {
     const token = this.storageService.getSession("token");
     if (!token) {
       console.error("Token JWT no encontrado");
-      return null; // Si no hay token, retornamos null
+      return null;  
     }
     return token;
   }
 
-  // Obtener los comentarios para un tweet
-  getCommentsByTweetId(tweetId: number): Observable<Comentario[]> {
-    const token = this.getToken(); // Verificar que el token está presente
+   getCommentsByTweetId(tweetId: number): Observable<Comentario[]> {
+    const token = this.getToken();  
     if (!token) {
-      return throwError(() => new Error("Token no encontrado")); // Si no hay token, retornamos un error
+      return throwError(() => new Error("Token no encontrado"));  
     }
 
-    // Configuramos los headers con el token
-    const httpOptions = {
+     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': 'Bearer ' + token
       })
@@ -48,11 +68,10 @@ export class TweetService {
       );
   }
 
-  // Crear un comentario
-  addComment(commentData: any): Observable<Comentario> {
-    const token = this.getToken(); // Verificar que el token está presente
+   addComment(commentData: any): Observable<Comentario> {
+    const token = this.getToken();  
     if (!token) {
-      return throwError(() => new Error("Token no encontrado")); // Si no hay token, retornamos un error
+      return throwError(() => new Error("Token no encontrado"));  
     }
 
     const httpOptions = {
@@ -67,7 +86,7 @@ export class TweetService {
       );
   }
 
-  // Obtener los tweets
+  
   getTweets(page: number, size: number): Observable<any> {
     const token = this.getToken();
     if (!token) {
@@ -87,7 +106,7 @@ export class TweetService {
       );
   }
 
-  // Crear un tweet
+  
   postTweet(myTweet: string): Observable<Object> {
     const token = this.getToken();
     if (!token) {
@@ -110,9 +129,53 @@ export class TweetService {
   }
 
   
+  addReaction(reactionData: any): Observable<any> {
+    const token = this.getToken();
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': 'Bearer ' + token,
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post(`${this.apiURL}api/reacciones/crear`, reactionData, httpOptions)
+      .pipe(catchError(this.handleError));
+  }
 
 
   
+  deleteTweet(id: number): Observable<any> {
+  return this.http.delete(
+    `${this.apiURL}api/publicaciones/${id}`,   
+    {
+      ...this.getHttpOptions(),
+      responseType: 'text' as 'json'   
+    }
+  ).pipe(
+    catchError(this.handleError)
+  );
+}
+
+  
+   
+  isTweetOwner(tweetId: number): Observable<boolean> {
+  const token = this.getToken();
+  if (!token) {
+    return throwError(() => new Error("Token no encontrado"));
+  }
+
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Authorization': 'Bearer ' + token
+    })
+  };
+
+  return this.http.get<boolean>(`${this.apiURL}api/publicaciones/${tweetId}/owner`, httpOptions)
+    .pipe(
+      catchError(this.handleError)
+    );
+}
+
 
   // Manejo de errores
   private handleError(error: any) {

@@ -7,37 +7,68 @@
   </header>
 
   <section class="tweet-box">
-    <textarea [(ngModel)]="tweetText" placeholder="Publica un tweet de algún Futbolista" class="tweet-textarea"></textarea>
-    <button (click)="addTweet()" class="tweet-button">Tweet</button>
-  </section>
+  <textarea [(ngModel)]="tweetText" placeholder="Publica un tweet de algún Futbolista" class="tweet-textarea"></textarea>
+  <p class="char-count">{{ tweetText.length }} / 400</p> <!-- Muestra el contador de caracteres -->
+  <button (click)="addTweet()" class="tweet-button" [disabled]="tweetText.length > 400">Tweet</button> <!-- Desactiva el botón si se exceden los 400 caracteres -->
+</section>
 
+
+  <div>
   <section class="tweet-list">
     <div *ngFor="let tweet of tweets" class="tweet-card">
       <div class="tweet-header">
         <p class="username"><strong> Publicado por {{ tweet.username }}</strong></p>
         <p class="date">{{ tweet.fechaCreacion | date: 'short' }}</p>
+              <button *ngIf="isTweetOwner(tweet.id) || isAdmin()" (click)="deleteTweet(tweet.id)" class="delete-tweet-btn">🗑</button>
+
       </div>
+ 
       <p class="content">{{ tweet.contenido }}</p>
 
-      <!-- Reacciones -->
-      <div class="reacciones">
-        <button (click)="addReaction(tweet.id, 'LIKE')" class="reaction-btn">👍 Like</button>
-        <button (click)="addReaction(tweet.id, 'LOVE')" class="reaction-btn">❤️ Love</button>
-        <button (click)="addReaction(tweet.id, 'SAD')" class="reaction-btn">😢 Sad</button>
-        <button (click)="addReaction(tweet.id, 'ANGRY')" class="reaction-btn">😡 Angry</button>
-        <button (click)="addReaction(tweet.id, 'GOAT')" class="reaction-btn">🐐 GOAT</button>
-      </div>
+      <!-- Botones de reacciones-->
+    <div class="reacciones">
+  <button 
+    (click)="addReaction(tweet.id, 'LIKE')" 
+    class="reaction-btn" 
+    [ngClass]="{ 'reaction-selected': selectedReactions[tweet.id] === 'LIKE' }">
+    👍 Like
+  </button>
 
-      <!-- Mostrar el emoji con más reacciones -->
-      <p *ngIf="reactions[tweet.id]">
-        <strong>Reacción más popular:</strong> {{ getMostReactedEmoji(tweet.id) }}
-      </p>
+  <button 
+    (click)="addReaction(tweet.id, 'LOVE')" 
+    class="reaction-btn" 
+    [ngClass]="{ 'reaction-selected': selectedReactions[tweet.id] === 'LOVE' }">
+    ❤️ Love
+  </button>
 
+  <button 
+    (click)="addReaction(tweet.id, 'SAD')" 
+    class="reaction-btn" 
+    [ngClass]="{ 'reaction-selected': selectedReactions[tweet.id] === 'SAD' }">
+    😢 Sad
+  </button>
+
+  <button 
+    (click)="addReaction(tweet.id, 'ANGRY')" 
+    class="reaction-btn" 
+    [ngClass]="{ 'reaction-selected': selectedReactions[tweet.id] === 'ANGRY' }">
+    😡 Angry
+  </button>
+
+  <button 
+    (click)="addReaction(tweet.id, 'GOAT')" 
+    class="reaction-btn" 
+    [ngClass]="{ 'reaction-selected': selectedReactions[tweet.id] === 'GOAT' }">
+    🐐 GOAT
+  </button>
+</div>
+
+       
       <!-- Botón para mostrar/ocultar los comentarios -->
-      <button (click)="toggleComments(tweet.id)" *ngIf="commentsVisibility[tweet.id] === undefined || commentsVisibility[tweet.id]">
-        Ver comentarios
+      <button (click)="toggleComments(tweet.id)" *ngIf="commentsVisibility[tweet.id] === undefined || commentsVisibility[tweet.id]" class="toggle-comments-btn">
+        Ver comentarios👀
       </button>
-      <button (click)="toggleComments(tweet.id)" *ngIf="commentsVisibility[tweet.id] === false ">
+      <button (click)="toggleComments(tweet.id)" *ngIf="commentsVisibility[tweet.id] === false" class="toggle-comments-btn">
         Ocultar comentarios
       </button>
 
@@ -64,6 +95,10 @@
     <div #scrollAnchor></div>
     <p *ngIf="loading" class="loading">Cargando más tweets...</p>
   </section>
+  
 
   <footer class="footer">by aldair</footer>
+
+  
 </div>
+ 

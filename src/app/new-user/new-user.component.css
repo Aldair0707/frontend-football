@@ -1,11 +1,5 @@
 /* Estilo general */
-body {
-  font-family: 'Arial', sans-serif;
-  background: #121212;
-  color: #fff;
-  margin: 0;
-  padding: 0;
-}
+ 
 
 /* Contenedor del formulario */
 .new-user-container {
@@ -20,7 +14,7 @@ body {
 }
 
 h2 {
-  color: #f5a623;
+  color: #f8f7f4;
   font-size: 2rem;
   margin-bottom: 20px;
 }
@@ -51,7 +45,7 @@ h2 {
 }
 
 .form-group input:focus {
-  border-color: #f5a623;
+  border-color: #a123f5;
   outline: none;
 }
 
@@ -75,23 +69,23 @@ h2 {
 button[type="submit"] {
   padding: 12px;
   font-size: 1rem;
-  background-color: #f5a623;
+  background-color: #72187a;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   margin-top: 20px;
-  width: 100%;
+  width: 90%;
 }
 
 button[type="submit"]:disabled {
-  background-color: #7f7f7f;
+  background-color: #72187a;
   cursor: not-allowed;
 }
 
 button[type="submit"]:hover {
-  background-color: #e6891f;
+  background-color: #b11cbe;
 }
 
 /* Enlace de inicio de sesión */
@@ -101,7 +95,7 @@ button[type="submit"]:hover {
 }
 
 .signup-link a {
-  color: #f5a623;
+  color: #f354c3;
   text-decoration: none;
 }
 

@@ -7,13 +7,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-page.component.css']
 })
 export class LandingPageComponent {
-  isLoginVisible: boolean = true;  // Muestra el formulario de login por defecto
+  isLoginVisible: boolean = true;   
 
   constructor(private router: Router) {}
 
-  // Este método se activa cuando el login es exitoso y oculta el formulario
-  hideLogin() {
+   hideLogin() {
     this.isLoginVisible = false;
-    this.router.navigate(['/home']);  // Redirige a la página principal después del login
+    this.router.navigate(['/home']);   
   }
 }

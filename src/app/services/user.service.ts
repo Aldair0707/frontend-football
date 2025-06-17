@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class UserService {
-  private apiURL = 'http://localhost:8080/api/auth/';
+  private apiURL = 'https://soccerhub-spring.onrender.com/api/auth/';
 
   private httpOptions = {
     headers: new HttpHeaders({
@@ -33,7 +33,7 @@ export class UserService {
 
   // Método para registrar un usuario
   registerUser(userData: any): Observable<any> {
-    return this.http.post(this.apiURL + 'signup', userData, this.httpOptions);  // Cambié la ruta a /signup
+    return this.http.post(this.apiURL + 'signup', userData, this.httpOptions);   
   }
 
   private handleError(error: any) {

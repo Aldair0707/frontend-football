@@ -12,7 +12,7 @@ import { StorageService } from '../services/storage.service';
 export class ComentariosComponent implements OnInit {
   comentarios: Comentario[] = [];
   comentarioTexto: string = '';
-  publicacionId: number = 0; // El ID de la publicación a la que se asociarán los comentarios
+  publicacionId: number = 0; 
 
   constructor(
     private tweetService: TweetService,
@@ -22,12 +22,12 @@ export class ComentariosComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.publicacionId = params['id']; // Obtener el ID de la publicación desde la URL
-      this.getComentarios(); // Llamar a la función para cargar los comentarios
+      this.publicacionId = params['id'];  
+      this.getComentarios();  
     });
   }
 
-  // Obtener comentarios de una publicación
+
   getComentarios() {
     this.tweetService.getCommentsByTweetId(this.publicacionId).subscribe({
       next: (res) => {
@@ -39,7 +39,7 @@ export class ComentariosComponent implements OnInit {
     });
   }
 
-  // Enviar un nuevo comentario
+   
   enviarComentario() {
     const token = this.storageService.getSession("token");
 
@@ -55,8 +55,8 @@ export class ComentariosComponent implements OnInit {
 
     this.tweetService.addComment(comentario).subscribe({
       next: (res) => {
-        this.getComentarios(); // Actualizamos la lista de comentarios
-        this.comentarioTexto = ''; // Limpiamos el campo del comentario
+        this.getComentarios();  
+        this.comentarioTexto = '';  
       },
       error: (err) => {
         console.error('Error al enviar comentario', err);

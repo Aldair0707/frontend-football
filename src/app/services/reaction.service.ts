@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { StorageService } from "../services/storage.service";
 import { Reaccion } from '../models/reacciones/Reaccion';
 
@@ -10,7 +10,7 @@ import { Reaccion } from '../models/reacciones/Reaccion';
 })
 export class ReactionService {
 
-  private apiURL = 'http://localhost:8080/api/reacciones/';
+  private apiURL = 'https://soccerhub-spring.onrender.com/api/reacciones/';
   private token: string = '';
 
   constructor(
@@ -36,8 +36,8 @@ export class ReactionService {
     })
   };
 
-  // Método para agregar una reacción
-  addReaction(reactionData: any): Observable<Reaccion> {
+ 
+  addReaction(reactionData: any, reactionType?: string): Observable<Reaccion> {
     const token = this.getToken();
     if (!token) {
         return throwError(() => new Error("Token no encontrado"));
@@ -56,7 +56,7 @@ export class ReactionService {
         );
 }
 
-  // Método para obtener las reacciones de una publicación
+  
   getReactionsByPostId(tweetId: number): Observable<Reaccion[]> {
   const token = this.getToken();
   if (!token) {
@@ -75,31 +75,43 @@ export class ReactionService {
     );
 }
 
-  // Método para contar las reacciones por tipo para una publicación
-  countReactionsByType(postId: number): Observable<any> {
+
+   countReactionsByType(postId: number): Observable<any> {
     return this.http.get<any>(`${this.apiURL}contador/${postId}`, this.httpOptions)
       .pipe(
         catchError(this.handleError)
       );
 }
 
-  // Método para eliminar una reacción
-  deleteReaction(reactionId: number): Observable<any> {
-    return this.http.delete(`${this.apiURL}${reactionId}`, this.httpOptions)
-      .pipe(
-        catchError(this.handleError)
-      );
-  }
+  
+  deleteReaction(tweetId: number, reactionType: string): Observable<any> {
+  const url = `${this.apiURL}eliminar`;
+  const params = new HttpParams()
+    .set('publicacionId', tweetId.toString())
+    .set('tipo', reactionType);
+
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Authorization': 'Bearer ' + this.storageService.getSession('token') // Asegúrate de que el token esté siendo pasado correctamente
+  });
+
+  return this.http.delete(url, { params, headers })
+    .pipe(
+      catchError(err => {
+        console.error('Error al eliminar reacción:', err);
+        return throwError(err);
+      })
+    );
+}
+
 
   // Manejo de errores
   private handleError(error: any) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
-      // Error del lado del cliente
-      errorMessage = error.error.message;
+       errorMessage = error.error.message;
     } else {
-      // Error del lado del servidor
-      errorMessage = `Código de error: ${error.status}\nMensaje: ${error.message}`;
+       errorMessage = `Código de error: ${error.status}\nMensaje: ${error.message}`;
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));

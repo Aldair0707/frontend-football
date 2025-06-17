@@ -9,29 +9,29 @@ import { StorageService } from '../services/storage.service';
   styleUrls: ['./reacciones.component.css']
 })
 export class ReaccionesComponent implements OnInit {
-  tweetId: number = 0;  // El ID de la publicación/tweet
-  reactions: any[] = [];  // Arreglo para almacenar las reacciones
-  reactionText: string = '';  // Variable para almacenar la reacción actual
+  tweetId: number = 0;   
+  reactions: any[] = [];   
+  reactionText: string = '';  
   loading: boolean = false;
 
   constructor(
-    private reactionService: ReactionService, // Servicio que maneja las reacciones
+    private reactionService: ReactionService,  
     private activatedRoute: ActivatedRoute,
     private storageService: StorageService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params => {
-      this.tweetId = params['id'];  // Obtener el ID de la publicación desde la URL
-      this.getReactions();  // Cargar las reacciones cuando se inicie el componente
+      this.tweetId = params['id'];   
+      this.getReactions();   
     });
   }
 
-  // Obtener reacciones para la publicación actual
+ 
   getReactions() {
     this.reactionService.getReactionsByPostId(this.tweetId).subscribe({
       next: (res) => {
-        this.reactions = res;  // Asignamos las reacciones obtenidas
+        this.reactions = res;   
       },
       error: (err) => {
         console.error("Error al obtener reacciones", err);
@@ -39,7 +39,6 @@ export class ReaccionesComponent implements OnInit {
     });
   }
 
-  // Agregar una nueva reacción
   addReaction(reactionType: string) {
     const token = this.storageService.getSession('token');
 
@@ -50,13 +49,13 @@ export class ReaccionesComponent implements OnInit {
 
     const reactionData = {
       publicacionId: this.tweetId,
-      tipo: reactionType // Enviar el tipo de reacción al backend
+      tipo: reactionType  
     };
 
     this.reactionService.addReaction(reactionData).subscribe({
       next: (res) => {
-        this.getReactions();  // Actualizar la lista de reacciones después de agregar una nueva
-        this.reactionText = '';  // Limpiar el campo de texto
+        this.getReactions();  
+        this.reactionText = '';   
       },
       error: (err) => {
         console.error('Error al agregar reacción:', err);
