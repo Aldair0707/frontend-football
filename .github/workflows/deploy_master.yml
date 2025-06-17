@@ -30,7 +30,7 @@ jobs:
         run: npm run build --prod
 
       - name: 📁 List Angular build output
-        run: ls -la dist/soccerhub/browser
+        run: ls -la dist/frontend-football/browser
 
       - name: 🐳 Build Docker image with NGINX
         run: docker build -t ${{ secrets.DOCKER_USER }}/soccerhub-angular:${{ github.sha }} .
