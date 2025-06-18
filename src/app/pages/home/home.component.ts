@@ -36,17 +36,16 @@ export class HomeComponent {
 
 
   ngOnInit(): void {
-    const user = this.storageService.getUser();  // Verifica si el usuario está logueado
+    const user = this.storageService.getUser();  //verifica si el usuario está logueado
     if (!user) {
-      // Si no hay un usuario, redirige a la página de login
-      this.router.navigate(['']);
+       this.router.navigate(['']);
     } else {
       this.username = user;
       this.getTweets();
     }
   }
 
-  //  Obtener todos los tweets
+ 
   getTweets() {
     this.tweetService.getTweets().subscribe({
       next: data => {
@@ -57,8 +56,14 @@ export class HomeComponent {
           //}
           return tweet;
         });
+        
+        /*
+        this.tweets.sort((a, b) => {
+         return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+        });
+        */
 
-        // Cargar las reacciones de cada tweet
+        //carga las reacciones de cada tweet
         for (let tweet of this.tweets) {
           this.loadReactions(tweet.id);
         }
@@ -67,7 +72,7 @@ export class HomeComponent {
     });
   }
 
-  // Cargar reacciones por tweet
+  //carga reacciones por tweet
   loadReactions(tweetId: number) {
     this.reactionService.getReactionCount(tweetId).subscribe({
       next: data => {
