@@ -75,8 +75,8 @@
 
     <!-- ✅ Botones -->
     <div class="flex justify-end gap-2 mt-3">
-      <button class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded" (click)="cancelEdit()">CANCELAR</button>
-      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" (click)="confirmEditTweet()">GUARDAR</button>
+      <button class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded" (click)="cancelEdit()">Cancelar</button>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" (click)="confirmEditTweet()">Guardar</button>
     </div>
   </p-dialog>
 
@@ -90,10 +90,10 @@
       <!-- Menú desplegable -->
       <div *ngIf="activeTweetId === tweet.id" class="absolute right-0 mt-2 w-32 bg-white text-black shadow-md rounded z-50">
         <button class="w-full text-left px-3 py-2 hover:bg-gray-200" (click)="onEditTweet(tweet)">
-          EDITAR
+          Editar
         </button>
         <button class="w-full text-left px-3 py-2 hover:bg-red-100 text-red-600" (click)="onDeleteTweet(tweet.id)">
-          ELIMINAR
+          Eliminar
         </button>
       </div>
     </div>
@@ -109,11 +109,11 @@
 
     <!-- Contenido del tweet -->
     <div class="pt-3 text-white">
-
+      <!--
       <p class="font-medium text-lg flex justify-between">
         <span>Publicado por {{ tweet.postedBy.username }}</span>
         <span class="text-sm text-gray-400">{{ tweet.createdAt | date: 'short' }}</span>
-      </p>
+      </p>-->
 
       <p class="text-3xl mb-3 font-medium">{{ tweet.tweet }}</p>
 
