@@ -1,0 +1,24 @@
+<div class="container_chat_bot mt-3">
+  <div class="container-chat-options">
+    <div class="chat">
+      <div class="chat-bot">
+        <textarea
+          [(ngModel)]="content"
+          (keydown.enter)="submitComment()"
+          placeholder="Escribe un comentario..."
+          class="w-full p-3 rounded-md bg-black bg-opacity-30 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        ></textarea>
+      </div>
+      <div class="options flex justify-end mt-2">
+        <div class="btns-add mr-2">
+        </div>
+
+        <button
+          class="btn-submit bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-md transition"
+          (click)="submitComment()">
+          <i class="pi pi-send"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,142 @@
+<div *ngIf="username"> <!-- Verifica si el usuario está autenticado -->
+<br>
+<div class="flex justify-end items-center mb-4">
+  <button (click)="logout()"
+          class="text-white bg-red-500 hover:bg-red-600 px-10 py-3 rounded-full transition flex items-center gap-2 shadow">
+    <i class="pi pi-sign-out text-white"></i>
+  </button>
+</div>
+
+<br>
+<app-tweet-form (tweetCreated)="prependTweet($event)"></app-tweet-form>
+<div class="min-h-screen py-5 px-3 bg-gray-100">
+  <h2 class="text-3xl font-bold text-center mb-6 text-blue-800">
+    ¡HOLA {{ username }}! ⚽
+  </h2>
+  <p-dialog
+    [(visible)]="editModalVisible"
+    modal
+    [style]="{
+      width: '90vw',
+      maxWidth: '600px',
+      background: 'rgba(0, 0, 0, 0.3)',
+      backdropFilter: 'blur(10px)',
+      borderRadius: '1rem'
+    }"
+    [contentStyle]="{
+      backgroundColor: 'rgba(0,0,0,0.3)',
+      color: '#fff',
+      padding: '1.5rem',
+      borderRadius: '1rem'
+    }"
+    styleClass="custom-transparent"
+    header="Editar Tweet"
+    [closable]="true"
+    (onHide)="cancelEdit()">
+
+    <!-- Texto del tweet -->
+    <div class="mb-3">
+      <label class="text-sm text-white">TEXTO:</label>
+      <textarea
+        [(ngModel)]="editedText"
+        rows="3"
+        class="w-full p-3 bg-black bg-opacity-30 text-white rounded-md placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      ></textarea>
+    </div>
+
+    <!-- Nueva imagen 
+    <div class="mb-3">
+      <label class="text-sm text-white">NUEVA IMAGEN:</label>
+      <input
+        type="file"
+        (change)="onEditImageSelected($event)"
+        accept="image/*"
+        class="block w-full text-sm text-gray-100
+               file:mr-4 file:py-2 file:px-4
+               file:rounded-full file:border-0
+               file:text-sm file:font-semibold
+               file:bg-gray-700 file:text-white
+               hover:file:bg-gray-600
+               transition duration-300"/>
+    </div>-->
+
+    <!-- Botón para alternar eliminar imagen 
+    <div class="flex justify-center mb-4">
+      <button
+        (click)="toggleRemoveImage()"
+        class="w-30 text-sm px-4 py-2 rounded transition"
+        [ngClass]="removeImage
+          ? 'bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded'
+          : 'bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded'"
+      >
+        {{ removeImage ? 'MANTENER IMAGEN' : 'ELIMINAR IMAGEN' }}
+      </button>
+    </div>-->
+
+    <!-- ✅ Botones -->
+    <div class="flex justify-end gap-2 mt-3">
+      <button class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded" (click)="cancelEdit()">CANCELAR</button>
+      <button class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded" (click)="confirmEditTweet()">GUARDAR</button>
+    </div>
+  </p-dialog>
+
+  <div *ngFor="let tweet of tweets" class="glass-card mb-5 max-w-screen-sm mx-auto">
+    <!-- Botón de opciones (solo si es el autor del tweet) -->
+    <div class="absolute top-2 right-2" *ngIf="username === tweet.postedBy.username">
+      <button (click)="toggleTweetOptions(tweet.id)" class="text-white bg-black bg-opacity-40 hover:bg-opacity-70 rounded-full px-2 py-1">
+        ⋮
+      </button>
+
+      <!-- Menú desplegable -->
+      <div *ngIf="activeTweetId === tweet.id" class="absolute right-0 mt-2 w-32 bg-white text-black shadow-md rounded z-50">
+        <button class="w-full text-left px-3 py-2 hover:bg-gray-200" (click)="onEditTweet(tweet)">
+          EDITAR
+        </button>
+        <button class="w-full text-left px-3 py-2 hover:bg-red-100 text-red-600" (click)="onDeleteTweet(tweet.id)">
+          ELIMINAR
+        </button>
+      </div>
+    </div>
+    <br>
+    <!-- Imagen si existe 
+    <div *ngIf="tweet.imageUrl" class="image-container" [ngStyle]="{ 'background-image': 'url(' + tweet.imageUrl + ')' }">
+      <div class="overlay">
+        <p>{{ tweet.postedBy.username }}</p>
+        <p class="date">CREADO EL: {{ tweet.createdAt | date:'short' }}</p> 
+      </div>
+    </div>-->
+
+
+    <!-- Contenido del tweet -->
+    <div class="pt-3 text-white">
+
+      <p class="font-medium text-lg flex justify-between">
+        <span>Publicado por {{ tweet.postedBy.username }}</span>
+        <span class="text-sm text-gray-400">{{ tweet.createdAt | date: 'short' }}</span>
+      </p>
+
+      <p class="text-3xl mb-3 font-medium">{{ tweet.tweet }}</p>
+
+
+
+      <!-- Mostrar la fecha de creación -->
+       <!-- Reacciones (solo si existen datos) -->
+      <ng-container *ngIf="reactionCounts[tweet.id]">
+        <app-reaction-buttons
+          [tweetId]="tweet.id"
+          [counts]="reactionCounts[tweet.id]">
+        </app-reaction-buttons>
+      </ng-container>
+
+      <!-- Formulario de comentario -->
+      <app-comment-form
+        [tweetId]="tweet.id"
+        (commentSubmitted)="addComment($event)">
+      </app-comment-form>
+
+      <!-- Lista de comentarios -->
+      <app-comment-list [comments]="tweet.comments || []"></app-comment-list>
+    </div>
+  </div>
+</div>
+</div>

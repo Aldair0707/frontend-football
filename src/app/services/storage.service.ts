@@ -6,43 +6,38 @@ import { Injectable } from '@angular/core';
 export class StorageService {
 
   constructor() { }
-  setSession(key: string, obj: any) {
-    sessionStorage.setItem(key, JSON.stringify(obj))
+ 
+  public setToken(token: string): void {
+    localStorage.setItem('token', token);
   }
 
-  getSession(key: string) {
-    const obj = sessionStorage.getItem(key);
-    return obj ? JSON.parse(obj) : null;
+   
+  public getToken(): string | null {
+    return localStorage.getItem('token');
   }
 
-  sessionDeleteAll() {
-    sessionStorage.clear();
+ 
+  public clearToken(): void {
+    localStorage.removeItem('token');
   }
 
-  sessionDeleteByKey(key: string) {
-    sessionStorage.removeItem(key);
+ 
+  public setUser(user: string): void {
+    localStorage.setItem('user', user);
   }
 
-  setLocal(key: string, obj: any) {
-    localStorage.setItem(key, JSON.stringify(obj));
+   
+  public getUser(): string | null {
+    return localStorage.getItem('user');
   }
 
-  getLocal(key: string) {
-    const obj = localStorage.getItem(key);
-    return obj ? JSON.parse(obj) : null;
+  
+  public clearUser(): void {
+    localStorage.removeItem('user');
   }
-
-  localDeleteAll() {
+ 
+  
+  public signOut(): void {
     localStorage.clear();
   }
-
-  localDeleteByKey(key: string) {
-    localStorage.removeItem(key);
-  }
-
-  clearSession(): void {
-  sessionStorage.clear();
-}
-
-
 }

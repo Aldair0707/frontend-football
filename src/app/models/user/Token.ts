@@ -1,3 +1,4 @@
+/*
 export class Token {
   accessToken!: string;
   id!: number;
@@ -6,3 +7,4 @@ export class Token {
   roles!: string[];
   tokenType!: string;
 }
+*/

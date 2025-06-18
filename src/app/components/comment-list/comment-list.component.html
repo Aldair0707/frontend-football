@@ -1,0 +1,58 @@
+<div class="mb-3 mt-4">
+  <h4 class="text-md text-green-800 font-semibold mb-2">COMENTARIOS:</h4>
+  
+  <div *ngIf="comments.length === 0" class="text-gray-500">
+    ¡Sé el primero en comentar!
+  </div>
+
+  <div *ngFor="let comment of visibleComments" class="relative mb-3 p-3 rounded-lg bg-gray-50 shadow-md">
+    <!-- Botón de opciones -->
+    <div *ngIf="comment.username === currentUser" class="absolute top-2 right-2 z-10">
+      <button (click)="toggleOptions(comment.id)" class="text-gray-600 hover:text-black px-2 py-1 rounded-full">
+        ⋮
+      </button>
+      <div *ngIf="activeCommentId === comment.id" class="absolute right-0 mt-2 w-28 bg-white shadow rounded text-sm z-20">
+        <button class="w-full text-left px-3 py-1 text-red-600 hover:bg-red-100" (click)="enableEdit(comment.id, comment.content)">EDITAR</button>
+        <button class="w-full text-left px-3 py-1 text-red-600 hover:bg-red-100" (click)="deleteComment(comment.id)">ELIMINAR</button>
+      </div>
+    </div>
+    <br>
+
+    <!-- Comentario en modo normal -->
+    <div *ngIf="!editMode[comment.id]">
+      <span class="font-bold text-blue-700">{{ comment.username }}</span>
+      <span class="text-gray-800 ml-1">{{ comment.content }}</span>
+      <div *ngIf="comment.createdAt" class="text-xs text-gray-400 mt-1">
+        {{ comment.createdAt | date: 'short' }}
+      </div>
+    </div>
+    <br>
+
+    <!-- Comentario en modo edición -->
+    <div *ngIf="editMode[comment.id]">
+      <textarea [(ngModel)]="editedContent[comment.id]" rows="2"
+        class="w-full p-2 mt-2 text-sm text-white rounded bg-black bg-opacity-30 placeholder-gray-300 border border-gray-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+        placeholder="Edita tu comentario.."></textarea>
+
+      <div class="flex justify-end gap-2 mt-2">
+        <button (click)="cancelEdit(comment.id)"
+          class="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded">
+          CANCELAR
+        </button>
+        <button (click)="saveEdit(comment.id)"
+          class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded">
+          GUARDAR
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Botón para mostrar/ocultar comentarios si hay más de 0 -->
+  <div *ngIf="comments.length >= 0" class="flex justify-center mb-4">
+    <button (click)="toggleComments()" class="text-blue-700 hover:underline font-semibold">
+      {{ showAll ? 'Ocultar comentarios' : 'Mostrar comentarios' }}
+    </button>
+  </div>
+
+  
+</div>

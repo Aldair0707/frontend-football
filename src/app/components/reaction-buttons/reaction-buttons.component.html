@@ -1,0 +1,24 @@
+<div
+  class="w-full p-3 rounded-md bg-black bg-opacity-20 text-white placeholder-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 flex justify-start items-center gap-2 shadow-xl backdrop-blur-md">
+  <ng-container *ngFor="let key of getReactions()">
+    <button
+      (click)="reactByName(key)"
+      class="relative before:hidden hover:before:flex before:justify-center before:items-center before:h-4 before:text-[.6rem] before:px-1 
+             before:content-[attr(data-tooltip)] before:bg-black dark:before:bg-white dark:before:text-black 
+             before:text-white before:bg-opacity-50 before:absolute before:-top-7 before:rounded-lg 
+             hover:-translate-y-2 cursor-pointer hover:scale-110 bg-white dark:bg-[#191818] rounded-full px-2 py-1 flex items-center justify-center"
+      [attr.data-tooltip]="getTooltip(key)"
+    >
+      <span class="leading-none">{{ getEmoji(key) }}</span>
+      <span *ngIf="counts[key] > 0" class="text-xs ml-1 leading-none text-black">({{ counts[key] }})</span>
+    </button>
+  </ng-container>
+
+  <button
+    (click)="removeReaction()"
+    class="hover:scale-110 cursor-pointer bg-red-500 text-white rounded-full px-2 py-1 ml-2"
+    title="Eliminar mi reacción"
+  >
+    ✖
+  </button>
+</div>

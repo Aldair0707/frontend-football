@@ -1,3 +1,4 @@
+/*
 export class User {
     id: Number = 0;
     email: String = "";
@@ -5,5 +6,5 @@ export class User {
     firstName: String = "";
     lastName: String = "";
 }
-
+*/
 

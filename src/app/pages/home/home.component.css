@@ -1,0 +1,285 @@
+:root {
+  --bg: #121212; /* Fondo negro con un toque de morado */
+  --card-bg: rgba(255, 255, 255, 0.1);
+  --border-color: rgba(255, 255, 255, 0.15);
+  --text-color: #e8e8e8; /* Blanco suave */
+  --secondary-text: #b3b3b3; /* Gris suave */
+  --primary: #8c4fff; /* Morado brillante */
+  --hover: #7c3fe2; /* Morado más intenso */
+  --danger: #ff4d4f;
+  --danger-hover: #ff7875;
+  --radius: 16px;
+  --font: 'Poppins', 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font);
+  background: linear-gradient(145deg, #121212, #1e1e2f); /* Fondo con morado oscuro */
+  color: var(--text-color);
+}
+
+.container {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 20px;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.logo-container h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.logout-button {
+  background: none;
+  color: var(--primary);
+  margin-top: 8px;
+  background-color: #741519;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.logout-button:hover {
+  color: #faf8f8;
+}
+
+/* Tweet box */
+.tweet-box {
+  background: #0e0e0f;
+  backdrop-filter: blur(14px);
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin-bottom: 36px;
+  box-shadow: 0 0 10px rgba(185, 131, 255, 0.3);
+}
+
+.tweet-textarea {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text-color);
+  font-size: 1rem;
+  resize: none;
+  margin-bottom: 16px;
+}
+
+.tweet-button {
+  margin-top: 8px;
+  background-color: #191f6e;
+  color: #e1e3e9;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.tweet-button:hover {
+  background-color: #0d125c;
+}
+
+/* Tweet list */
+.tweet-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.tweet-card {
+  width: 95%;
+  max-width: 1000px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  background: #0e0e0f;
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 20px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease;
+}
+
+.tweet-card:hover {
+  transform: scale(1.01);
+}
+
+.tweet-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: var(--secondary-text);
+  margin-bottom: 12px;
+}
+
+.username {
+  font-weight: 600;
+  color: var(--text-color);
+}
+
+.date {
+  font-style: italic;
+}
+
+/* Botón eliminar tweet */
+.delete-tweet-btn {
+  background: #ff4d4f;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.3s;
+}
+
+.delete-tweet-btn:hover {
+  color: var(--danger-hover);
+}
+
+.content {
+  font-size: 1.05rem;
+  margin: 12px 0;
+  color: var(--text-color);
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+  word-break: break-all;
+}
+
+/* Reacciones */
+.reacciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.reaction-btn {
+  background: #3a3f5c;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: background 0.3s;
+}
+
+.reaction-btn:hover {
+  background: var(--hover);
+}
+
+.reaction-selected {
+  background-color: #9333ea !important;
+  font-weight: bold;
+  box-shadow: 0 0 8px #9333ea;
+}
+
+/* Mostrar reacciones y comentarios */
+.toggle-reactions-btn,
+.toggle-comments-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.toggle-reactions-btn:hover,
+.toggle-comments-btn:hover {
+  color: var(--hover);
+}
+
+.reacciones-list p,
+.comentarios-list .comentario {
+  font-size: 0.85rem;
+  color: var(--secondary-text);
+  margin: 4px 0;
+}
+
+/* Comentarios */
+.comentarios-list {
+  margin-top: 8px;
+  padding-left: 14px;
+  border-left: 2px solid var(--border-color);
+}
+
+.comentario-header {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--secondary-text);
+}
+
+.comentario-texto {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  margin: 2px 0 8px;
+}
+
+/* Comentario form */
+.comentario-form {
+  margin-top: 12px;
+}
+
+.comentario-form textarea {
+  width: 100%;
+  background-color: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 10px;
+  color: var(--text-color);
+  resize: vertical;
+  outline: none;
+}
+
+.comentario-form textarea:focus {
+  border-color: var(--primary);
+}
+
+.comentario-form button {
+  margin-top: 8px;
+  background-color: #520561;
+  color: #8d909c;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.comentario-form button:hover {
+  background-color:  #440363;
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  color: var(--secondary-text);
+  font-size: 0.85rem;
+  margin-top: 40px;
+}
