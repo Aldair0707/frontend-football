@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://players-api-bpvw.onrender.com/api'
+  apiUrl: 'https://soccerhub-spring07.onrender.com/api'
 };

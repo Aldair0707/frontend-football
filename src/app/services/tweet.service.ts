@@ -9,7 +9,7 @@ import { StorageService } from './storage.service';
 })
 export class TweetService {
 
-  private apiURL = 'https://players-api-bpvw.onrender.com/api/tweets';  // URL 
+  private apiURL = 'https://soccerhub-spring07.onrender.com/api/tweets';  // URL 
 
   constructor(
     private http: HttpClient,
