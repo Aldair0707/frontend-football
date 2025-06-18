@@ -9,7 +9,7 @@ import { StorageService } from './storage.service';
 })
 export class TweetService {
 
-  private apiURL = 'http://localhost:8080/api/tweets';  // URL local para el backend
+  private apiURL = 'https://players-api-nor2.onrender.com/api/tweets';  // URL local para el backend
 
   constructor(
     private http: HttpClient,
